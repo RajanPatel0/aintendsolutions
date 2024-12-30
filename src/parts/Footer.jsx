@@ -25,12 +25,12 @@ export default function Footer() {
             <h1 className="text-lg text-theme-blue pt-4 pb-2">
               Office
             </h1>
-            <p className="text-lg text-gray-400 font-dark hover:underline">
+            <button type='number' target="_blank" className="text-lg text-gray-400 font-dark hover:underline" isExternal>
               +91 7009853307
-            </p>
-            <p className="text-lg text-gray-400 font-dark hover:underline">
+            </button>
+            <button type='email' target="_blank" className="text-lg text-gray-400 font-dark hover:underline" isExternal>
               aintendsolutions@gmail.com
-            </p>
+            </button>
             <p className="text-lg text-gray-400 font-light">
               Dasmesh Nagar(Gill Rd.), Ludhiana, Punjab(India)
             </p>
@@ -47,6 +47,20 @@ export default function Footer() {
             </Button>
             <Button href="https://github.com/RajanPatel0" type="link" target="_blank" className="flex text-lg text-gray-400 font-light hover:underline" isExternal>
               Github
+            </Button>
+          </div>
+          <div className="w-1/3 ml-16 sm:ml-0 mt-0">
+            <h1 className="text-lg text-theme-blue pt-4 pb-2">
+              Customer
+            </h1>
+            <Button href="/privacy" type="link"  className="flex text-lg text-gray-400 font-light hover:underline" >
+              Privacy Policy
+            </Button>
+            <Button href="/tac" type="link"  className="flex text-lg text-gray-400 font-light hover:underline" >
+              Terms & Conditions
+            </Button>
+            <Button href="/refund" type="link"  className="flex text-lg text-gray-400 font-light hover:underline" >
+              Refund Policy
             </Button>
           </div>
         </div>
