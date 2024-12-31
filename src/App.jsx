@@ -5,6 +5,8 @@
 /* eslint-disable-next-line no-unused-vars */
 import { Route, Routes } from 'react-router-dom';
 
+import { Analytics } from '@vercel/analytics/react';
+
 import LandingPage from 'pages/LandingPage';
 import ProjectPage from 'pages/ProjectPage';
 import NotFoundPage from 'pages/NotFoundPage';
@@ -32,6 +34,7 @@ function App() {
         <Route exact path="/refund" element={<RefundPage />} />
         <Route path="**" element={<NotFoundPage />} />
       </Routes>
+      <Analytics />
     </>
   );
 }
