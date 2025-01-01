@@ -20,38 +20,84 @@ import Button from 'elements/Button';
 
 export const DiscussForm = (actions) => {
   const { data, resetForm } = actions;
-  const submitEmail = () => {
+
+  const validateForm = () => {
+    const {
+      name, company, email, phone, projectIdea,
+    } = data;
+
+    if (!name || !company || !email || !phone || !projectIdea) {
+      toast.error('All fields are required.');
+      return false;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error('Please enter a valid email address.');
+      return false;
+    }
+
+    // Validate phone number (simple check for digits)
+    if (!/^\d+$/.test(phone)) {
+      toast.error('Phone number must contain only digits.');
+      return false;
+    }
+
+    return true;
+  };
+
+  const submitEmail = async () => {
+    if (!validateForm()) return;
     const {
       name, company, email, phone, projectIdea,
     } = data;
 
     const templateParams = {
-      from_name: `${name} - ${company} ( ${phone} - ${email} )`,
-      to_name: 'AIntend Solutions',
+      // from_name: `${name} - ${company} ( ${phone} - ${email} )`,
+      // to_name: 'AIntend Solutions',
+      // message: projectIdea,
+      from_name: name,
+      company_name: company,
+      email_address: email,
+      phone_number: phone,
       message: projectIdea,
     };
 
-    if (
-      name !== ''
-      && company !== ''
-      && email !== ''
-      && phone !== ''
-      && projectIdea !== ''
-    ) {
-      emailjs.send(
-        'service_h4gtndg',
-        'template_a9tvs7a',
+    // if (
+    //   name !== ''
+    //   && company !== ''
+    //   && email !== ''
+    //   && phone !== ''
+    //   && projectIdea !== ''
+    // ) {
+    //   emailjs.send(
+    //     'service_h4gtndg',
+    //     'template_a9tvs7a',
+    //     templateParams,
+    //     'user_csqIxzN5mKsl1yw4ffJzV',
+    //   )
+    //     .then(() => {
+    //       toast.success('Success! we\'\ll get back to you soon. Thank you!');
+    //       resetForm();
+    //     }, (error) => {
+    //       toast.error(error);
+    //     });
+    // } else {
+    //   toast.error('Please fill out the blank form.');
+    // }
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         templateParams,
-        'user_csqIxzN5mKsl1yw4ffJzV',
-      )
-        .then(() => {
-          toast.success('Success! we\'\ll get back to you soon. Thank you!');
-          resetForm();
-        }, (error) => {
-          toast.error(error);
-        });
-    } else {
-      toast.error('Please fill out the blank form.');
+        import.meta.env.VITE_EMAILJS_USER_ID,
+      );
+      toast.success('Success! We\'ll get back to you soon. Thank you!');
+      resetForm();
+    } catch (error) {
+      toast.error('Failed to send email. Please try again.');
+      console.error('EmailJS Error:', error);
     }
   };
 
